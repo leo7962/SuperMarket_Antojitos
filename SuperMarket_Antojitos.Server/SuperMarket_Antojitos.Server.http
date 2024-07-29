@@ -1,0 +1,6 @@
+@SuperMarket_Antojitos.Server_HostAddress = http://localhost:5268
+
+GET {{SuperMarket_Antojitos.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
