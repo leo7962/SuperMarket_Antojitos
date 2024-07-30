@@ -1,1 +1,48 @@
-<p>makeproduct works!</p>
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <h1 class="mb-4">New product</h1>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="row g-5">
+        <div class="col-md-12 col-lg-6 col-xl-7">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-item w-100">
+                <label class="form-label my-3">Product Name<sup>*</sup></label>
+                <input type="text" class="form-control" formControlName="productName" placeholder="CellPhone and brand">
+                <div *ngIf="productForm.get('productName')?.invalid && productForm.get('productName')?.touched" class="text-danger">
+                  Product Name is required
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-item w-100">
+                <label class="form-label my-3">Product Code<sup>*</sup></label>
+                <input type="text" class="form-control" formControlName="productCode" placeholder="4009900484039">
+                <div *ngIf="productForm.get('productCode')?.invalid && productForm.get('productCode')?.touched" class="text-danger">
+                  Product Code is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-item">
+            <label class="form-label my-3">Unit Price<sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="unitPrice" placeholder="$ Price product">
+            <div *ngIf="productForm.get('unitPrice')?.invalid && productForm.get('unitPrice')?.touched" class="text-danger">
+              Unit Price is required and must be a valid number
+            </div>
+          </div>
+          <div class="form-item">
+            <label class="form-label my-3">Units in Stock <sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="unitsInStock" placeholder="Number of units">
+            <div *ngIf="productForm.get('unitsInStock')?.invalid && productForm.get('unitsInStock')?.touched" class="text-danger">
+              Units in Stock is required and must be a valid number
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Checkout Page End -->

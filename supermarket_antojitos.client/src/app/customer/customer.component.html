@@ -6,3 +6,66 @@
     </li>
   </ul>
 </div>
+
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <h1 class="mb-4">New customer</h1>
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <div class="row g-5">
+        <div class="col-md-12 col-lg-6 col-xl-7">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-item w-100">
+                <label class="form-label my-3">First Name<sup>*</sup></label>
+                <input type="text" class="form-control" formControlName="firstName" placeholder="George">
+                <div *ngIf="customerForm.get('firstName')?.invalid && customerForm.get('firstName')?.touched" class="text-danger">
+                  First Name is required
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-item w-100">
+                <label class="form-label my-3">Last Name<sup>*</sup></label>
+                <input type="text" class="form-control" formControlName="lastName" placeholder="Phillips">
+                <div *ngIf="customerForm.get('lastName')?.invalid && customerForm.get('lastName')?.touched" class="text-danger">
+                  Last Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-item">
+            <label class="form-label my-3">DNI/CC<sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="dni" placeholder="10788654">
+            <div *ngIf="customerForm.get('dni')?.invalid && customerForm.get('dni')?.touched" class="text-danger">
+              DNI is required and must be 10 digits
+            </div>
+          </div>
+          <div class="form-item">
+            <label class="form-label my-3">CellPhone<sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="phoneNumber" placeholder="315-XXX-XXXX">
+            <div *ngIf="customerForm.get('phoneNumber')?.invalid && customerForm.get('phoneNumber')?.touched" class="text-danger">
+              Phone Number is required and must be 10 digits
+            </div>
+          </div>
+          <div class="form-item">
+            <label class="form-label my-3">Email<sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="email" placeholder="test@testing.com">
+            <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="text-danger">
+              Valid Email is required
+            </div>
+          </div>
+          <div class="form-item">
+            <label class="form-label my-3">Address <sup>*</sup></label>
+            <input type="text" class="form-control" formControlName="address" placeholder="House Number Street Name">
+            <div *ngIf="customerForm.get('address')?.invalid && customerForm.get('address')?.touched" class="text-danger">
+              Address is required
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="customerForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Checkout Page End -->

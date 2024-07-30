@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+.snackbar-success {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.snackbar-error {
+  background-color: #f44336;
+  color: #fff;
+}
+
 /* Variables */
 :root {
   --primary: #81C408;
@@ -655,3 +665,6 @@ a {
 /*** Footer End ***/
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
