@@ -25,7 +25,7 @@ public class SalesController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<SaleDTO>> GetSale(int id)
     {
-        var sale = await _saleService.GetSaleByIdAsync(id);
+        var sale = await _saleService.GetSaleByDetailAsync(id);
         if (sale == null) return NotFound();
 
         return Ok(sale);

@@ -22,7 +22,7 @@ public class InvoicesController : ControllerBase
     [HttpGet("export/pdf/{saleId:int}")]
     public async Task<IActionResult> ExportInvoicePDF(int saleId)
     {
-        var sale = await saleService.GetSaleByIdAsync(saleId);
+        var sale = await saleService.GetSaleByDetailAsync(saleId);
         var customer = await customerService.GetCustomerByIdAsync(sale.CustomerId);
 
         var fileContents = invoiceService.GenerateInvoicePdf(customer, sale);

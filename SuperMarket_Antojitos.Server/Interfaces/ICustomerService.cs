@@ -6,6 +6,7 @@ public interface ICustomerService
 {
     Task<IEnumerable<CustomerDTO>> GetCustomersAsync();
     Task<CustomerDTO> GetCustomerByIdAsync(int id);
+    Task<CustomerDTO> GetCustomerByDniAsyc(int dni);
     Task AddCustomerAsync(CustomerDTO customerDto);
     Task UpdateCustomerAsync(CustomerDTO customerDto);
     Task DeleteCustomerAsync(int id);

@@ -86,4 +86,18 @@ public class SaleServices : ISaleService
         if (sale != null) _context.Sales.Remove(sale);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<SaleDTO> GetSaleByDetailAsync(int id)
+    {
+        var sale = await _context.Sales
+        .Include(s => s.SaleDetails)
+        .FirstOrDefaultAsync(s => s.SaleId == id);
+
+        if (sale == null)
+        {
+            throw new Exception($"Sale with ID {id} not found.");
+        }
+
+        return _mapper.Map<SaleDTO>(sale);
+    }
 }

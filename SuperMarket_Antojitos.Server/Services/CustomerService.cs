@@ -32,6 +32,12 @@ public class CustomerService : ICustomerService
         await _context.SaveChangesAsync();
     }
 
+    public async Task<CustomerDTO> GetCustomerByDniAsyc(int dni)
+    {
+        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.DNI == dni);
+        return _mapper.Map<CustomerDTO>(customer);
+    }
+
     public async Task<CustomerDTO> GetCustomerByIdAsync(int id)
     {
         var customer = await _context.Customers.FindAsync(id);

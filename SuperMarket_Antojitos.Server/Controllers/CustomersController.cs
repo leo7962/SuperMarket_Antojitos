@@ -22,12 +22,20 @@ public class CustomersController : ControllerBase
         return Ok(customers);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}", Name ="GetUserByID")]
     public async Task<ActionResult<CustomerDTO>> Getcustomer(int id)
     {
         var customer = await _customerService.GetCustomerByIdAsync(id);
         if (customer == null) return NotFound();
 
+        return Ok(customer);
+    }
+
+    [HttpGet("byDni/{id:int}", Name = "GetUserByDNI")]
+    public async Task<ActionResult<CustomerDTO>> GetCustomerByDNI(int dni)
+    {
+        var customer = await _customerService.GetCustomerByDniAsyc(dni);
+        if (customer == null) return NotFound();
         return Ok(customer);
     }
 
@@ -37,7 +45,7 @@ public class CustomersController : ControllerBase
         if (!ModelState.IsValid) return BadRequest(ModelState);
         await _customerService.AddCustomerAsync(customerDto);
         return CreatedAtAction("GetCustomer", new { id = customerDto.CustomerId }, customerDto);
-    }
+    }    
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> PutCustomer(int id, [FromBody] CustomerDTO customerDto)
