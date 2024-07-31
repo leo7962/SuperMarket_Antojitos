@@ -26,13 +26,16 @@ export class CreatesaleComponent implements OnInit {
     private productService: ProductService
   ) {
     this.saleForm = this.fb.group({
-      dni: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      dni: ['', [Validators.required, Validators.pattern(/^\d{1,10}$/)]],
       saleDetails: this.fb.array([])
     });
   }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(products => this.products = products);
+
+    // Suscribirse a los cambios en el DNI para manejar habilitación de botones
+    this.saleForm.get('dni')?.valueChanges.subscribe(() => this.onDniChange());
   }
 
   get saleDetails(): FormArray {
@@ -70,9 +73,6 @@ export class CreatesaleComponent implements OnInit {
     const productId = detail.get('productId')?.value;
     const quantity = detail.get('quantity')?.value;
 
-    console.log('Product ID:', productId); // Debugging line
-    console.log('Quantity:', quantity);   // Debugging line
-
     if (productId && quantity) {
       this.productService.getProductById(productId).subscribe(
         product => {
@@ -92,39 +92,58 @@ export class CreatesaleComponent implements OnInit {
       return this.productPriceCache[productId].toFixed(2);
     }
 
-    // Si el precio no está en caché, obtén el precio del servicio
     this.productService.getProductById(productId).subscribe(product => {
       this.productPriceCache[productId] = product.unitPrice;
-      detail.get('totalPrice')?.updateValueAndValidity(); // Recalcula el total si es necesario
+      detail.get('totalPrice')?.updateValueAndValidity();
     });
 
     return '0.00';
   }
 
   onDniChange(): void {
-    const dni = Number(this.saleForm.get('dni')?.value);
-    console.log('DNI captured:', dni);
+    const dni = this.saleForm.get('dni')?.value;
 
     if (dni) {
       this.customerService.getCustomerByDni(dni).subscribe(
         customer => {
-          if (customer) {
-            this.customerExists = true;
-            this.isRegisteringCustomer = false;
-          } else {
-            this.customerExists = false;
-            this.isRegisteringCustomer = false;
-          }
+          this.customerExists = !!customer; // Asignamos true si el cliente existe, false si no
+          this.updateFormState();
         },
-        error => console.error('Error checking customer', error)
+        error => {
+          console.error('Error checking customer', error);
+          this.customerExists = false; // En caso de error, asumimos que el cliente no existe
+          this.updateFormState();
+        }
       );
     } else {
-      console.error('DNI is empty or invalid');
+      this.customerExists = false;
+      this.updateFormState();
     }
+  }
+
+  updateFormState(): void {
+    // Deshabilita el botón de agregar producto y el botón de crear venta si el cliente no existe
+    const buttonsDisabled = !this.customerExists;
+    this.saleDetails.controls.forEach(control => {
+      (control as FormGroup).get('productId')?.disable({ onlySelf: buttonsDisabled, emitEvent: false });
+      (control as FormGroup).get('quantity')?.disable({ onlySelf: buttonsDisabled, emitEvent: false });
+    });
+
+    this.saleForm.get('saleDetails')?.updateValueAndValidity();
   }
 
   startCustomerRegistration(): void {
     this.isRegisteringCustomer = true;
+  }
+
+  checkCustomer(): void {
+    const dni = this.saleForm.get('dni')?.value;
+    this.customerService.getCustomerByDni(dni).subscribe(customer => {
+      this.customerExists = !!customer; // Asignamos true si el cliente existe, false si no
+    }, error => {
+      console.error('Error checking customer', error);
+      this.customerExists = false; // En caso de error, asumimos que el cliente no existe
+    });
   }
 
   onCustomerRegistered(): void {
@@ -133,7 +152,7 @@ export class CreatesaleComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.saleForm.valid) {
+    if (this.saleForm.valid && this.customerExists) {
       const sale: Sale = {
         customerId: this.saleForm.get('dni')?.value,
         saleDate: new Date(),
@@ -145,12 +164,15 @@ export class CreatesaleComponent implements OnInit {
           console.log('Successfully created sale', response);
           alert('Successfully created sale');
           this.saleForm.reset();
+          this.customerExists = false; // Resetea el estado del cliente
         },
         error: err => {
           console.error('Error when creating the sale', err);
           alert('Error when creating the sale');
         }
       });
+    } else {
+      alert('Form is invalid or customer does not exist.');
     }
   }
 }

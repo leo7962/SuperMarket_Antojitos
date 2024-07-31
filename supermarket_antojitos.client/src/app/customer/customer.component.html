@@ -7,16 +7,15 @@
   </ul>
 </div>
 
-<!-- Checkout Page Start -->
 <div class="container-fluid py-5">
   <div class="container py-5">
-    <h1 class="mb-4">New customer</h1>
+    <h1 class="mb-4 text-center">New Customer</h1>
     <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
       <div class="row g-5">
-        <div class="col-md-12 col-lg-6 col-xl-7">
-          <div class="row">
-            <div class="col-md-12 col-lg-6">
-              <div class="form-item w-100">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+          <div class="row g-4">
+            <div class="col-12 col-md-6">
+              <div class="form-item">
                 <label class="form-label my-3">First Name<sup>*</sup></label>
                 <input type="text" class="form-control" formControlName="firstName" placeholder="George">
                 <div *ngIf="customerForm.get('firstName')?.invalid && customerForm.get('firstName')?.touched" class="text-danger">
@@ -24,8 +23,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12 col-lg-6">
-              <div class="form-item w-100">
+            <div class="col-12 col-md-6">
+              <div class="form-item">
                 <label class="form-label my-3">Last Name<sup>*</sup></label>
                 <input type="text" class="form-control" formControlName="lastName" placeholder="Phillips">
                 <div *ngIf="customerForm.get('lastName')?.invalid && customerForm.get('lastName')?.touched" class="text-danger">
@@ -42,7 +41,7 @@
             </div>
           </div>
           <div class="form-item">
-            <label class="form-label my-3">CellPhone<sup>*</sup></label>
+            <label class="form-label my-3">Cell Phone<sup>*</sup></label>
             <input type="text" class="form-control" formControlName="phoneNumber" placeholder="315-XXX-XXXX">
             <div *ngIf="customerForm.get('phoneNumber')?.invalid && customerForm.get('phoneNumber')?.touched" class="text-danger">
               Phone Number is required and must be 10 digits
@@ -62,10 +61,10 @@
               Address is required
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="customerForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="customerForm.invalid">Submit</button>
         </div>
       </div>
     </form>
   </div>
 </div>
-<!-- Checkout Page End -->
+

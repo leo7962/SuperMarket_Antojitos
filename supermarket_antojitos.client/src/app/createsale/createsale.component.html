@@ -1,9 +1,9 @@
 <div class="container-fluid py-5">
   <div class="container py-5">
-    <h1 class="mb-4">New Sale</h1>
+    <h1 class="mb-4 text-center">New Sale</h1>
     <form [formGroup]="saleForm" (ngSubmit)="onSubmit()">
       <div class="row g-5">
-        <div class="col-md-12 col-lg-6 col-xl-7">
+        <div class="col-md-12 col-lg-8 col-xl-7 mx-auto">
           <div class="form-item w-100">
             <label class="form-label my-3">DNI<sup>*</sup></label>
             <input type="text" formControlName="dni" class="form-control" (change)="onDniChange()" placeholder="DNI">
@@ -14,7 +14,7 @@
 
           <div *ngIf="customerExists">
             <div formArrayName="saleDetails">
-              <div *ngFor="let detail of saleDetails.controls; let i = index" [formGroupName]="i" class="sale-detail">
+              <div *ngFor="let detail of saleDetails.controls; let i = index" [formGroupName]="i" class="sale-detail mb-4">
                 <label class="form-label my-3">Product<sup>*</sup></label>
                 <select formControlName="productId" (change)="onProductChange(i)" class="form-control">
                   <option *ngFor="let product of products" [value]="product.productId">{{ product.productName }}</option>
@@ -37,15 +37,18 @@
               </div>
             </div>
 
-            <button type="button" (click)="addSaleDetail()" class="btn btn-secondary mt-3">Add Another Product</button>
+            <button type="button" (click)="addSaleDetail()" class="btn btn-secondary mt-3" [disabled]="!customerExists">Add Another Product</button>
           </div>
+
           <div *ngIf="!customerExists">
-            <p>Customer not found. Please register the customer first.</p>
-            <a routerLink="/create-customer" class="btn btn-primary">Register Customer</a>
+            <p class="text-center">Customer not found. Please register the customer first.</p>
+            <div class="text-center">
+              <a [routerLink]="['/create-costumer']" class="btn btn-primary">Register Customer</a>
+            </div>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="saleForm.invalid">Create Sale</button>
+      <button type="submit" class="btn btn-primary mt-3 w-100" [disabled]="saleForm.invalid || !customerExists">Create Sale</button>
     </form>
   </div>
 </div>

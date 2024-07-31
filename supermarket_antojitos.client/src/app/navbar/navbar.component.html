@@ -1,7 +1,6 @@
-<!-- Navbar start -->
 <div class="container-fluid fixed-top">
-  <div class="container topbar bg-primary d-none d-lg-block">
-    <div class="d-flex justify-content-between">
+  <div class="container topbar d-none d-lg-block">
+    <div class="d-flex justify-content-between align-items-center">
       <div class="top-info ps-2">
         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
         <!--<small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>-->
@@ -55,8 +54,8 @@
   <h1 class="text-center text-white display-6">Shop</h1>
   <ol class="breadcrumb justify-content-center mb-0">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-    <li class="breadcrumb-item active text-white">Shop</li>
+    <li class="breadcrumb-item"><a [routerLink]="['/make-product']">Create a Product</a></li>
+    <li class="breadcrumb-item active text-white"><a [routerLink]="['/report']"> Create a report</a></li>
   </ol>
 </div>
 <!-- Single Page Header End -->
