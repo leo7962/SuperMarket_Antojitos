@@ -32,12 +32,20 @@ public class SaleServices : ISaleService
 
     public async Task<SaleDTO> CreateAddSaleAsync(SaleDTO saleDto)
     {
+        using var transaction = await _context.Database.BeginTransactionAsync();
+
         try
         {
+            var customer = await _context.Customers
+                .Where(c => c.DNI == saleDto.CustomerId)
+                .FirstOrDefaultAsync();
+
+            if (customer == null) throw new Exception("Customer not found");
+
             var sale = new Sale
             {
                 SaleDate = DateTime.Now,
-                CustomerId = saleDto.CustomerId
+                CustomerId = customer.CustomerId
             };
 
             _context.Sales.Add(sale);
@@ -47,6 +55,7 @@ public class SaleServices : ISaleService
             {
                 var product = await _context.Products.FindAsync(detailDto.ProductId);
                 if (product == null) throw new Exception("Product not found");
+
                 if (product.UnitsInStock < detailDto.Quantity)
                     throw new Exception(
                         $"Insufficient stock for product {product.ProductName}. Available: {product.UnitsInStock}, requested: {detailDto.Quantity}.");
@@ -60,16 +69,19 @@ public class SaleServices : ISaleService
                 };
 
                 _context.SaleDetails.Add(saleDetail);
-
                 product.UnitsInStock -= detailDto.Quantity;
             }
 
             await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
             return _mapper.Map<SaleDTO>(sale);
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            await transaction.RollbackAsync();
+            // Log exception here if needed
+            throw new Exception($"An error occurred: {ex.Message}", ex.InnerException);
         }
     }
 

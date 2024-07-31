@@ -1,0 +1,51 @@
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <h1 class="mb-4">New Sale</h1>
+    <form [formGroup]="saleForm" (ngSubmit)="onSubmit()">
+      <div class="row g-5">
+        <div class="col-md-12 col-lg-6 col-xl-7">
+          <div class="form-item w-100">
+            <label class="form-label my-3">DNI<sup>*</sup></label>
+            <input type="text" formControlName="dni" class="form-control" (change)="onDniChange()" placeholder="DNI">
+            <div *ngIf="saleForm.get('dni')?.invalid && saleForm.get('dni')?.touched" class="text-danger">
+              DNI is required and must be 10 digits.
+            </div>
+          </div>
+
+          <div *ngIf="customerExists">
+            <div formArrayName="saleDetails">
+              <div *ngFor="let detail of saleDetails.controls; let i = index" [formGroupName]="i" class="sale-detail">
+                <label class="form-label my-3">Product<sup>*</sup></label>
+                <select formControlName="productId" (change)="onProductChange(i)" class="form-control">
+                  <option *ngFor="let product of products" [value]="product.productId">{{ product.productName }}</option>
+                </select>
+                <div *ngIf="detail.get('productId')?.invalid && detail.get('productId')?.touched" class="text-danger">
+                  Product is required.
+                </div>
+
+                <label class="form-label my-3">Quantity<sup>*</sup></label>
+                <input type="number" formControlName="quantity" (change)="onProductChange(i)" class="form-control" placeholder="Quantity">
+                <div *ngIf="detail.get('quantity')?.invalid && detail.get('quantity')?.touched" class="text-danger">
+                  Quantity is required and must be at least 1.
+                </div>
+
+                <label class="form-label my-3">Unit Price</label>
+                <input [attr.disabled]="true" formControlName="unitPrice" class="form-control" placeholder="Unit Price">
+
+                <label class="form-label my-3">Total Price<sup>*</sup></label>
+                <input [attr.disabled]="true" formControlName="totalPrice" class="form-control" placeholder="Total Price">
+              </div>
+            </div>
+
+            <button type="button" (click)="addSaleDetail()" class="btn btn-secondary mt-3">Add Another Product</button>
+          </div>
+          <div *ngIf="!customerExists">
+            <p>Customer not found. Please register the customer first.</p>
+            <a routerLink="/create-customer" class="btn btn-primary">Register Customer</a>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="saleForm.invalid">Create Sale</button>
+    </form>
+  </div>
+</div>

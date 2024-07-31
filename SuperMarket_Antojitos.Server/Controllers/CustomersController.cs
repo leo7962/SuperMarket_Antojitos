@@ -31,7 +31,7 @@ public class CustomersController : ControllerBase
         return Ok(customer);
     }
 
-    [HttpGet("byDni/{id:int}", Name = "GetUserByDNI")]
+    [HttpGet("byDni/{dni:int}", Name = "GetUserByDNI")]
     public async Task<ActionResult<CustomerDTO>> GetCustomerByDNI(int dni)
     {
         var customer = await _customerService.GetCustomerByDniAsyc(dni);

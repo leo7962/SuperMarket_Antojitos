@@ -11,6 +11,8 @@ import { CardproductComponent } from './cardproduct/cardproduct.component';
 import { MakeproductComponent } from './makeproduct/makeproduct.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CreatesaleComponent } from './createsale/createsale.component';
+import { RegistercustomerComponent } from './registercustomer/registercustomer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     NavbarComponent,
     ProductsComponent,
     CardproductComponent,
-    MakeproductComponent
+    MakeproductComponent,
+    CreatesaleComponent,
+    RegistercustomerComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

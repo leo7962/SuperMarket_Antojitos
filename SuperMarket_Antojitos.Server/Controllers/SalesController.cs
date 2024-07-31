@@ -43,7 +43,7 @@ public class SalesController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest($"An error occurred: {ex.Message}");
         }
     }
 
