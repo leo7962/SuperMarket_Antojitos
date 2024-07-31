@@ -6,11 +6,11 @@ namespace SuperMarket_Antojitos.Server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CustomersController : ControllerBase
+public class CostumersController : ControllerBase
 {
     private readonly ICustomerService _customerService;
 
-    public CustomersController(ICustomerService customerService)
+    public CostumersController(ICustomerService customerService)
     {
         _customerService = customerService;
     }
