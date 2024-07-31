@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../models/product.model';
+import { ProductService } from '../services/product/product.service';
 
 
 @Component({  
@@ -8,14 +9,18 @@ import { Component, NgModule } from '@angular/core';
   styleUrl: './products.component.css',
   
 })
-export class ProductsComponent {
-  products: any = [
-    {
-      "productId": 1,
-      "productCode": "Celular",
-      "productName": "Samsung Galaxy 21 FE",
-      "unitPrice": 1250,
-      "unitsInStock": 15
-    }
-  ]
+export class ProductsComponent implements OnInit {
+  products: Product[] = [];
+
+  constructor(private productService: ProductService) {
+
+  }
+
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe(
+      (products) => this.products = products,
+      (error) => console.error('Error loading products', error)
+    );
+  }
+  
 }

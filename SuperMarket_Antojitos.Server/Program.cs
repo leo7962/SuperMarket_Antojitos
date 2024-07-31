@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using SuperMarket_Antojitos.Server.Data;
 using SuperMarket_Antojitos.Server.Helpers;
 using SuperMarket_Antojitos.Server.Interfaces;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

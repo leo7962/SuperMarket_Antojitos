@@ -32,7 +32,7 @@ export class MakeproductComponent implements OnInit {
     if (this.productForm.valid) {
       this.productService.addProduct(this.productForm.value).subscribe(
         response => {
-          this.snackBar.open('Customer added successfully!', 'Close', {
+          this.snackBar.open('Product added successfully!', 'Close', {
             duration: 3000,
             panelClass: ['snackbar-success']
           });

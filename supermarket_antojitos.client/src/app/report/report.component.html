@@ -1,0 +1,20 @@
+<div class="container">
+  <h1 class="mb-4">Generate Sales Report</h1>
+
+  <form [formGroup]="reportForm" (ngSubmit)="generateReport('excel')">
+    <div class="mb-3">
+      <label for="startDate" class="form-label">Start Date</label>
+      <input type="date" id="startDate" formControlName="startDate" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="endDate" class="form-label">End Date</label>
+      <input type="date" id="endDate" formControlName="endDate" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <button type="button" class="btn btn-primary" (click)="generateReport('excel')">Download Excel Report</button>
+      <button type="button" class="btn btn-primary ms-2" (click)="generateReport('pdf')">Download PDF Report</button>
+    </div>
+  </form>
+</div>

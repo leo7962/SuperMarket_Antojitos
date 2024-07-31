@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Product } from '../models/product.model';
 
 @Component({
   selector: 'app-cardproduct',
@@ -6,16 +7,9 @@ import { Component, Input } from '@angular/core';
   styleUrl: './cardproduct.component.css'
 })
 export class CardproductComponent {
-  @Input() productName = null;
-
+  @Input() product?: Product;
 
   constructor() {
-
-    console.log("Estoy aqui")
     
-  }
-
-  ngOnInit(): void {
-    console.log(this.productName);
   }
 }

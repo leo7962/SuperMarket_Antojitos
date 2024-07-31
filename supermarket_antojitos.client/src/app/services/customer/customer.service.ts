@@ -7,7 +7,7 @@ import { Customer } from '../../models/customer.model';
   providedIn: 'root'
 })
 export class CustomerService {
-  private apiUrl = 'http://localhost:5268/api/Customers';
+  private apiUrl = 'http://localhost:5268/api/Costumers';
   constructor(private http: HttpClient) { }
 
   getCustomers(): Observable<Customer[]> {
